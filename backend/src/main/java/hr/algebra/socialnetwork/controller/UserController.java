@@ -38,22 +38,13 @@ public class UserController {
     return ResponseEntity.ok(updatedUser);
   }
 
-
-  @PostMapping(
-          value = "{userId}/profile-image",
-          consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-  )
+  @PostMapping(value = "{userId}/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public void uploadUserProfileImage(
-          @PathVariable("userId") Long userId,
-          @RequestParam("file") MultipartFile file
-  ) {
+      @PathVariable("userId") Long userId, @RequestParam("file") MultipartFile file) {
     userService.uploadProfileImage(userId, file);
   }
 
-  @GetMapping(
-          value = "{userId}/profile-image",
-          produces = MediaType.IMAGE_JPEG_VALUE
-  )
+  @GetMapping(value = "{userId}/profile-image", produces = MediaType.IMAGE_JPEG_VALUE)
   public byte[] getUserProfileImage(@PathVariable("userId") Long userId) {
     return userService.getProfileImage(userId);
   }
