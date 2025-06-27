@@ -13,6 +13,10 @@ import { getFullName } from "../../utils/utils";
 
 function SideUser() {
   const fullName = getFullName();
+  const userId = 1;
+  const profileImage = `http://localhost:8080/api/v1/users/${userId}/profile-image`;
+
+  console.log(profileImage);
 
   return (
     <Center>
@@ -42,7 +46,7 @@ function SideUser() {
           }}
         >
           <Avatar.Fallback name="Ime Prezime" />
-          <Avatar.Image src="https://avatars.githubusercontent.com/u/210037477?v=4" />
+          <Avatar.Image src={profileImage} />
         </Avatar.Root>
         <Heading
           fontWeight="bold"

@@ -15,6 +15,10 @@ import { getFullName } from "../utils/utils";
 function Profile() {
   const fullName = getFullName();
 
+  const userId = 1;
+  const profileImage = `http://localhost:8080/api/v1/users/${userId}/profile-image`;
+
+
   return (
     <>
       <Navbar />
@@ -50,7 +54,7 @@ function Profile() {
               <GridItem>
                 <Image
                   rounded="md"
-                  src="https://avatars.githubusercontent.com/u/210037477?v=4"
+                  src={profileImage}
                   alt="User Avatar"
                 />
               </GridItem>
