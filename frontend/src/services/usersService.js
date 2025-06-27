@@ -44,14 +44,13 @@ export const getUserById = async (userId) => {
 
 export const uploadProfileImage = (userId, formData) => {
   return axios.post(
-      `${API_BASE}/api/v1/users/${userId}/profile-image`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
+    `${API_BASE}/api/v1/users/${userId}/profile-image`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
 };
-
