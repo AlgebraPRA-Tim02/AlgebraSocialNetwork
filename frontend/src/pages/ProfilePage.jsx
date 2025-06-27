@@ -18,7 +18,6 @@ function Profile() {
   const userId = 1;
   const profileImage = `http://localhost:8080/api/v1/users/${userId}/profile-image`;
 
-
   return (
     <>
       <Navbar />
@@ -52,11 +51,7 @@ function Profile() {
           >
             <Grid templateColumns="auto 1fr" gap={4} padding={4}>
               <GridItem>
-                <Image
-                  rounded="md"
-                  src={profileImage}
-                  alt="User Avatar"
-                />
+                <Image rounded="md" src={profileImage} alt="User Avatar" />
               </GridItem>
               <GridItem>
                 <Heading fontSize="xl" fontFamily="body">
