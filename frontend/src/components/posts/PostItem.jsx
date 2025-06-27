@@ -9,11 +9,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { FaStar, FaRegStar, FaRegCommentDots } from "react-icons/fa";
-import { formatDate } from "../../utils/utils";
+import { formatDate, getUID } from "../../utils/utils";
 import {
-  createPost,
+  commentOnPost,
   ratePost,
   getCommentsForPost,
+  deletePostById,
 } from "../../services/postsService";
 import CommentItem from "./CommentItem";
 
@@ -21,6 +22,7 @@ const PostItem = ({ post }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const UID = getUID();
 
   const handleRating = (value) => {
     const response = ratePost(post.id, value);
@@ -28,10 +30,29 @@ const PostItem = ({ post }) => {
     setRating(value);
   };
 
-  const handleAddComment = () => {
-    if (comment.trim()) {
-      setComments([...comments, comment]);
+  const handleAddComment = async () => {
+    if (!comment.trim()) return;
+
+    try {
+      await commentOnPost(post.id, comment);
       setComment("");
+
+      const response = await getCommentsForPost(post.id);
+      const updatedComments = response.data;
+      if (Array.isArray(updatedComments)) {
+        setComments(updatedComments);
+      }
+    } catch (e) {
+      console.log("Comment error:", e);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    console.log("Post: " + post.id);
+    try {
+      await deletePostById(post.id);
+    } catch (e) {
+      console.log("Failed to delete post. " + e);
     }
   };
 
@@ -150,6 +171,21 @@ const PostItem = ({ post }) => {
           mb={2}
         />
         <HStack justify="flex-end">
+          {UID === post.userId && (
+            <Button
+              size="sm"
+              onClick={handleDeletePost}
+              leftIcon={<FaRegCommentDots />}
+              bg="linear-gradient(90deg, #2f3144, #555879)"
+              color="white"
+              _hover={{
+                opacity: 0.9,
+              }}
+            >
+              Delete post
+            </Button>
+          )}
+
           <Button
             size="sm"
             onClick={handleAddComment}
