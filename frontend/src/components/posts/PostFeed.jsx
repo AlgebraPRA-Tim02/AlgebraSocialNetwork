@@ -8,15 +8,36 @@ import {
   Textarea,
   Button,
   Flex,
+  FileUpload,
+  Icon,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getFullName } from "../../utils/utils";
-import { createPost } from "../../services/postsService";
+import { createPost, uploadPostImage } from "../../services/postsService";
+import { LuUpload } from "react-icons/lu";
 
 function PostFeed({ onPostCreated }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const fullName = getFullName();
+
+  {
+    /* 
+  const handleUpload = async () => {
+    if (!selectedFile) return alert("Select a file first");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      await uploadPostImage(//getUserID, formData);
+      alert("Upload successful");
+    } catch (err) {
+      console.error("Upload failed", err);
+    }
+  };*/
+  }
 
   const handlePost = async () => {
     if (!title.trim() && !content.trim()) return;
@@ -86,7 +107,26 @@ function PostFeed({ onPostCreated }) {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <Flex w="100%" justify="flex-end">
+            <Box>
+              <FileUpload.Root
+                alignItems="stretch"
+                maxFiles={1}
+                onFileAccept={(e) => setSelectedFile(e.target.files[0])}
+              >
+                <FileUpload.HiddenInput />
+                <FileUpload.Dropzone>
+                  <Icon size="md" color="fg.muted">
+                    <LuUpload />
+                  </Icon>
+                  <FileUpload.DropzoneContent>
+                    <Box>Drag and drop files here</Box>
+                    <Box color="fg.muted">.png, .jpg up to 5MB</Box>
+                  </FileUpload.DropzoneContent>
+                </FileUpload.Dropzone>
+                <FileUpload.List />
+              </FileUpload.Root>
+            </Box>
+            <Flex w="100%" justify="flex-end" marginTop={5}>
               <Button
                 variant="outline"
                 style={{
