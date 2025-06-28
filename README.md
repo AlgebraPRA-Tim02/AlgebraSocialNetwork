@@ -23,7 +23,6 @@
 | 🐘 Database    | MS SQL Server            |
 | 🛡 Security    | JWT Authentication       |
 | 🛡 File Storage| AWS S3                   |
-| 🐳 DevOps      | Docker & Docker Compose  |
 | 🔁 CI/CD       | GitHub Actions           |
 
 ---
